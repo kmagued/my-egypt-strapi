@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "serviceId": {
+      "type": "uid"
+    },
+    "description": {
+      "type": "text"
+    },
+    "priceRangeMin": {
+      "type": "integer"
+    },
+    "priceRangeMax": {
+      "type": "integer"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "area": {
+      "type": "enumeration",
+      "enum": [
+        "Cairo",
+        "Giza",
+        "Alexandria",
+        "Sharm el Sheikh",
+        "Luxor",
+        "Aswan",
+        "Hurghada",
+        "Gouna"
+      ]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    }
+  }
+}
