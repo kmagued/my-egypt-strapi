@@ -13,24 +13,25 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
-    },
-    "serviceId": {
-      "type": "uid"
+      "type": "string",
+      "required": true
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "priceRangeMin": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "priceRangeMax": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "image": {
       "type": "media",
       "multiple": true,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -39,7 +40,9 @@
       ]
     },
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "required": true,
+      "default": true
     },
     "area": {
       "type": "enumeration",
@@ -52,12 +55,28 @@
         "Aswan",
         "Hurghada",
         "Gouna"
-      ]
+      ],
+      "required": true
     },
     "category": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::category.category"
+    },
+    "webLink": {
+      "type": "string"
+    },
+    "operatingHoursStart": {
+      "type": "time",
+      "required": false
+    },
+    "operatingHoursEnd": {
+      "type": "time"
+    },
+    "provider": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::provider.provider"
     }
   }
 }
