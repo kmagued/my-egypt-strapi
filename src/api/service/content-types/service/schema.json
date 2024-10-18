@@ -77,6 +77,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::provider.provider"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::order.order",
+      "inversedBy": "services"
     }
   }
 }

@@ -470,6 +470,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -526,9 +527,9 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    service: Schema.Attribute.Relation<'oneToOne', 'api::service.service'>;
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     userId: Schema.Attribute.Relation<
-      'oneToOne',
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
     quantity: Schema.Attribute.Integer;
@@ -614,6 +615,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     operatingHoursStart: Schema.Attribute.Time;
     operatingHoursEnd: Schema.Attribute.Time;
     provider: Schema.Attribute.Relation<'oneToOne', 'api::provider.provider'>;
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
