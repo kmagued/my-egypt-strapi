@@ -21,6 +21,10 @@
     "email": {
       "type": "email",
       "required": true
+    },
+    "phone": {
+      "required": false,
+      "type": "biginteger"
     }
   }
 }

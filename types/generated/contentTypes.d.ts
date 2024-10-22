@@ -566,6 +566,7 @@ export interface ApiProviderProvider extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     webLink: Schema.Attribute.String;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
+    phone: Schema.Attribute.BigInteger;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -627,6 +628,8 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     operatingHoursEnd: Schema.Attribute.Time;
     provider: Schema.Attribute.Relation<'oneToOne', 'api::provider.provider'>;
     location: Schema.Attribute.String;
+    isFeatured: Schema.Attribute.Boolean;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

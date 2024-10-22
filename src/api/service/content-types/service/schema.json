@@ -81,6 +81,19 @@
     },
     "location": {
       "type": "string"
+    },
+    "isFeatured": {
+      "type": "boolean"
+    },
+    "cover": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
