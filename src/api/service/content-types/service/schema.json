@@ -58,10 +58,11 @@
       ],
       "required": true
     },
-    "category": {
+    "subcategory": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::category.category"
+      "relation": "manyToOne",
+      "target": "api::subcategory.subcategory",
+      "inversedBy": "services"
     },
     "webLink": {
       "type": "string"

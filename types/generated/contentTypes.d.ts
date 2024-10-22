@@ -618,7 +618,10 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
       ]
     > &
       Schema.Attribute.Required;
-    category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
+    subcategory: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::subcategory.subcategory'
+    >;
     webLink: Schema.Attribute.String;
     operatingHoursStart: Schema.Attribute.Time;
     operatingHoursEnd: Schema.Attribute.Time;
@@ -685,6 +688,7 @@ export interface ApiSubcategorySubcategory extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     description: Schema.Attribute.String;
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
