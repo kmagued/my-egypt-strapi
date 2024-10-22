@@ -500,6 +500,10 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   attributes: {
     name: Schema.Attribute.String;
     description: Schema.Attribute.Text;
+    subcategories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subcategory.subcategory'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -527,12 +531,14 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     userId: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    quantity: Schema.Attribute.Integer;
+    service_orders: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-order.service-order'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -551,6 +557,7 @@ export interface ApiProviderProvider extends Struct.CollectionTypeSchema {
     singularName: 'provider';
     pluralName: 'providers';
     displayName: 'Provider';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -558,6 +565,7 @@ export interface ApiProviderProvider extends Struct.CollectionTypeSchema {
   attributes: {
     name: Schema.Attribute.String;
     webLink: Schema.Attribute.String;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -615,7 +623,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     operatingHoursStart: Schema.Attribute.Time;
     operatingHoursEnd: Schema.Attribute.Time;
     provider: Schema.Attribute.Relation<'oneToOne', 'api::provider.provider'>;
-    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    location: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -627,6 +635,67 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::service.service'
+    >;
+  };
+}
+
+export interface ApiServiceOrderServiceOrder
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'service_orders';
+  info: {
+    singularName: 'service-order';
+    pluralName: 'service-orders';
+    displayName: 'ServiceOrder';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    quantity: Schema.Attribute.Integer;
+    service: Schema.Attribute.Relation<'oneToOne', 'api::service.service'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-order.service-order'
+    >;
+  };
+}
+
+export interface ApiSubcategorySubcategory extends Struct.CollectionTypeSchema {
+  collectionName: 'subcategories';
+  info: {
+    singularName: 'subcategory';
+    pluralName: 'subcategories';
+    displayName: 'Subcategory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subcategory.subcategory'
     >;
   };
 }
@@ -1010,6 +1079,8 @@ declare module '@strapi/strapi' {
       'api::order.order': ApiOrderOrder;
       'api::provider.provider': ApiProviderProvider;
       'api::service.service': ApiServiceService;
+      'api::service-order.service-order': ApiServiceOrderServiceOrder;
+      'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
