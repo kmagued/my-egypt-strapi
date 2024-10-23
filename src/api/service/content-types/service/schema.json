@@ -44,20 +44,6 @@
       "required": true,
       "default": true
     },
-    "area": {
-      "type": "enumeration",
-      "enum": [
-        "Cairo",
-        "Giza",
-        "Alexandria",
-        "Sharm el Sheikh",
-        "Luxor",
-        "Aswan",
-        "Hurghada",
-        "Gouna"
-      ],
-      "required": true
-    },
     "subcategory": {
       "type": "relation",
       "relation": "manyToOne",
@@ -86,14 +72,21 @@
       "type": "boolean"
     },
     "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "area": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::area.area",
+      "inversedBy": "services"
     }
   }
 }

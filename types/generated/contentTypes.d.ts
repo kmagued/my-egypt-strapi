@@ -486,6 +486,32 @@ export interface PluginUsersPermissionsUser
   };
 }
 
+export interface ApiAreaArea extends Struct.CollectionTypeSchema {
+  collectionName: 'areas';
+  info: {
+    singularName: 'area';
+    pluralName: 'areas';
+    displayName: 'Area';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::area.area'>;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -606,19 +632,6 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     isActive: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
-    area: Schema.Attribute.Enumeration<
-      [
-        'Cairo',
-        'Giza',
-        'Alexandria',
-        'Sharm el Sheikh',
-        'Luxor',
-        'Aswan',
-        'Hurghada',
-        'Gouna',
-      ]
-    > &
-      Schema.Attribute.Required;
     subcategory: Schema.Attribute.Relation<
       'manyToOne',
       'api::subcategory.subcategory'
@@ -630,6 +643,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     location: Schema.Attribute.String;
     isFeatured: Schema.Attribute.Boolean;
     cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    area: Schema.Attribute.Relation<'manyToOne', 'api::area.area'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1082,6 +1096,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::area.area': ApiAreaArea;
       'api::category.category': ApiCategoryCategory;
       'api::order.order': ApiOrderOrder;
       'api::provider.provider': ApiProviderProvider;
